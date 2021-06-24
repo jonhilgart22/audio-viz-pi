@@ -7,8 +7,8 @@ from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
 from typing import List
 
 wavfile = wave.open("test.wav")
-sample_rate = wavfile.getframerate()
-no_channels = wavfile.getnchannels()
+SAMPLE_RATE = wavfile.getframerate()
+NUM_CHANNELS = wavfile.getnchannels()
 
 # Constants
 CHUNK = 4096
@@ -30,14 +30,13 @@ def create_d_matrix() -> RGBMatrix:
     return Dmatrix
 
 
-def calculate_levels(data, chunk, sample_rate, previous_power) -> List[int]:
+def calculate_levels(data, chunk, previous_power: List[int]) -> List[int]:
     """
     Create the matrix visualization
 
 	Args:
 		data ([type]): input sound wave
 		chunk ([type]): total number of pixels in our matrix
-		sample_rate ([type]): framerate of the input sound wave
         previous_power([type]): the previous wavelength power array
 
 	Returns:
@@ -53,7 +52,6 @@ def calculate_levels(data, chunk, sample_rate, previous_power) -> List[int]:
     power = np.log10(np.abs(fourier)) ** 2
     try:
         reshaped_power = np.reshape(power, (N_ROWS, int(chunk / N_COLS)))
-        previous_power = power
     except ValueError as e:
         print(e, "---error---")
         reshaped_power = np.reshape(previous_power, (N_ROWS, int(chunk / N_COLS)))
@@ -72,17 +70,15 @@ def main():
     output = aa.PCM(
         aa.PCM_PLAYBACK,
         aa.PCM_NORMAL,
-        channels=2,
-        rate=sample_rate,
+        channels=NUM_CHANNELS,
+        rate=SAMPLE_RATE,
         format=aa.PCM_FORMAT_S16_LE,
         periodsize=CHUNK,
     )
 
     while data != "":
         output.write(data)
-        matrix, current_power = calculate_levels(
-            data, CHUNK, sample_rate, previous_power
-        )
+        matrix, current_power = calculate_levels(data, CHUNK, previous_power)
         if len(matrix) == 1:  # finished
             break
         previous_power = current_power
@@ -92,14 +88,14 @@ def main():
                 x *= 2
                 if x < 32:
                     # https://github.com/hzeller/rpi-rgb-led-matrix/blob/master/bindings/python/rgbmatrix/core.pyx#L32
-                    Dmatrix.SetPixel(y, x, 0, 200, 50)  # r,g,b
-                    Dmatrix.SetPixel(y, x - 1, 0, 200, 50)
+                    Dmatrix.SetPixel(y, x, 100, 50, 50)  # r,g,b
+                    Dmatrix.SetPixel(y, x - 1, 100, 50, 50)
                 elif x < 50:
-                    Dmatrix.SetPixel(y, x, 150, 150, 0)
-                    Dmatrix.SetPixel(y, x - 1, 150, 150, 0)
+                    Dmatrix.SetPixel(y, x, 25, 25, 0)
+                    Dmatrix.SetPixel(y, x - 1, 25, 25, 0)
                 else:
-                    Dmatrix.SetPixel(y, x, 200, 0, 200)
-                    Dmatrix.SetPixel(y, x - 1, 200, 0, 200)
+                    Dmatrix.SetPixel(y, x, 50, 100, 50)
+                    Dmatrix.SetPixel(y, x - 1, 50, 100, 50)
         data = wavfile.readframes(CHUNK)
 
 
