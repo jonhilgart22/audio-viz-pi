@@ -1,3 +1,4 @@
+# taken from https://www.hackster.io/gatoninja236/raspberry-pi-audio-spectrum-display-1791fa#things
 import alsaaudio as aa
 import wave
 from struct import unpack
