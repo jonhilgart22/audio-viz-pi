@@ -3,3 +3,4 @@ Audio visualization for raspberry pi
 
 ## Install
 1. Follow the instructions here https://github.com/hzeller/rpi-rgb-led-matrix/tree/master/bindings/python
+2. `apt-get libasound2-dev`
