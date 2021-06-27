@@ -1,0 +1,1 @@
+NUM_CHANNELS = 2

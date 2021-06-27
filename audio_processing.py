@@ -12,6 +12,8 @@ import alsaaudio, time, audioop
 from struct import unpack
 from typing import Optional, Tuple
 import time
+from constants import NUM_CHANNELS
+
 
 SAMPLE_RATE = 44100
 
@@ -20,16 +22,18 @@ def read_input_audio(testing: bool = False) -> Optional[alsaaudio.PCM]:
     # Open the device in nonblocking capture mode. The last argument could
     # just as well have been zero for blocking mode. Then we could have
     # left out the sleep call in the bottom of the loop
+    # print("inside audio processing .py")
     try:
         I, data = alsaaudio.PCM(
             alsaaudio.PCM_CAPTURE,
             alsaaudio.PCM_NORMAL,
             cardindex=1,
-            channels=2,
+            channels=NUM_CHANNELS,
             rate=SAMPLE_RATE,
             format=alsaaudio.PCM_FORMAT_S16_LE,
-            periodsize=128,  # map to the 64x64 matrix size
+            periodsize=128,  # map to the 64x64 matrix size, 128 or  8192. 128 is too fast?
         ).read()
+        # print(data, "data inside audio processing")
     except alsaaudio.ALSAAudioError as e:
         print(f"Error reading in audio {e}")
         return None

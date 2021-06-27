@@ -6,6 +6,7 @@ import numpy as np
 from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
 from typing import List, Any
 import time
+from constants import NUM_CHANNELS
 
 __all__ = ["generate_visualization"]
 
@@ -19,7 +20,6 @@ def read_in_wav_file(file_name: str = "test.wav"):
 
 # Constants
 SAMPLE_RATE = 44100
-NUM_CHANNELS = 2
 CHUNK = 4096
 N_ROWS = 64
 N_COLS = 64
@@ -33,10 +33,9 @@ def create_d_matrix() -> RGBMatrix:
     options.cols = N_COLS
     options.chain_length = 1
     options.parallel = 1
-    options.hardware_mapping = "adafruit-hat-pwm"  # also try adafruit-hat
+    options.hardware_mapping = "adafruit-hat"
     options.drop_privileges = False
     Dmatrix = RGBMatrix(options=options)
-    Dmatrix.Clear()
     return Dmatrix
 
 
@@ -65,7 +64,7 @@ def calculate_levels(data: Any, previous_power: List[int]) -> List[int]:
         max_value = np.max(power)
         # https://stats.stackexchange.com/questions/281162/scale-a-number-between-a-range
         matrix = np.int_(N_ROWS * (power - min_value) / (max_value - min_value))
-        print(matrix, "matrix")
+        # matrix = power
     else:
         try:
             reshaped_power = np.reshape(power, (N_ROWS, N_COLS))
@@ -77,6 +76,8 @@ def calculate_levels(data: Any, previous_power: List[int]) -> List[int]:
         matrix = np.int_(np.average(reshaped_power, axis=1))
     print(matrix.shape, "matrix shape")
     print(matrix, "matrix")
+    # matrix = np.array([np.random.randint(10, 64) for i in range(64)])
+    print(len(matrix), "len matrix")
     return matrix, power
 
 
@@ -105,9 +106,11 @@ def write_to_led_matrix(data: Any):
         return None
     previous_power = current_power
     Dmatrix.Clear()
+    print("Writing to a matrix")
     for y in range(0, N_ROWS):  # write to the matrix
         for x in range(int(matrix[y])):
-            x *= 2
+            # print(x, y, " x,y")
+            x *= 2  # original 2
             if x < 32:
                 # https://github.com/hzeller/rpi-rgb-led-matrix/blob/master/bindings/python/rgbmatrix/core.pyx#L32
                 Dmatrix.SetPixel(y, x, 255, 50, 50)  # r,g,b
@@ -118,6 +121,7 @@ def write_to_led_matrix(data: Any):
             else:
                 Dmatrix.SetPixel(y, x, 255, 100, 50)
                 Dmatrix.SetPixel(y, x - 1, 255, 100, 50)
+    print("Finished writing to the led matrix")
 
 
 def generate_visualization(data=None) -> None:
@@ -125,15 +129,17 @@ def generate_visualization(data=None) -> None:
     main input function that listens to a .wav file and draws corresponding pixels
     or takes in buffer input from an audio device
     
-    :param data: either a buffer stream from audio in
+    :param data: either a buffer stream from audio in or none. If None, reads a .wav file
     """
     reading_input_file = False
     if data is None:
         reading_input_file = True
-        wavfile = read_in_wav_file("test.wav")
+        wavfile = read_in_wav_file("moo.wav")
         data = wavfile.readframes(CHUNK)
+        print(data, "data")
 
     if reading_input_file:
+        print("reading input file")
         while data != "":
             write_to_led_matrix(data)
     else:
