@@ -3,7 +3,7 @@
 Audio visualization for raspberry pi
 
 ## Materials
-- Purchase everything from this guide except for the `DFRobot ESP32 FireBeetle` chip.
+- Purchase everything from [this guide](https://www.hackster.io/gatoninja236/raspberry-pi-audio-spectrum-display-1791fa#things) except for the `DFRobot ESP32 FireBeetle` chip.
 - Assemble following the adafruit guide [here](https://learn.adafruit.com/adafruit-rgb-matrix-plus-real-time-clock-hat-for-raspberry-pi/assembly). One tricky thing is sodering the white wire from the rainbow cable to the 24 GPIO pin. You can see an image of this below.
 - You'll also need a usb microphone. I used [this one](https://www.amazon.com/gp/product/B08M37224H/ref=ppx_yo_dt_b_search_asin_image?ie=UTF8&psc=1).
 
@@ -18,7 +18,7 @@ Audio visualization for raspberry pi
 
 
 1. Images
-- With the 64x64 matrix hooked up to the pi, you can also display images such as the image of our walk below.
+- With the 64x64 matrix hooked up to the pi, you can also display images such as this image of a walk in the woods.
 
 ![Pi image](media/walk-in-the-woods.jpeg)
 
