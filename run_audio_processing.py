@@ -29,7 +29,7 @@ def visualization_output_queue() -> None:
             print("empty queue")
 
 
-def main():
+def main() -> None:
     """The main driver program that reads in an audio stream and sends it to
     a visualization program to display
     """
