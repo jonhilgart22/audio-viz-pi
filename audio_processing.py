@@ -8,12 +8,15 @@
 ## To test it out, run it and shout at your microphone:
 # borrowed from https://www.raspberrypi.org/forums/viewtopic.php?t=212857
 
-import alsaaudio, time, audioop
+import audioop
+import time
 from struct import unpack
 from typing import Optional
-import time
-from constants import NUM_CHANNELS, PERIOD_SIZE, SAMPLE_RATE
+
 import numpy as np
+
+import alsaaudio
+from constants import NUM_CHANNELS, PERIOD_SIZE, SAMPLE_RATE
 
 
 def read_input_audio(testing: bool = False) -> Optional[alsaaudio.PCM]:

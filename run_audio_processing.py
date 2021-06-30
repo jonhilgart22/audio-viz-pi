@@ -1,15 +1,11 @@
 #!/usr/bin/python
 
-from audio_processing import read_input_audio
-
-from spectrum_matrix import generate_visualization
-import time
 import multiprocessing
+import queue
 from threading import Thread
 
-import queue
-import numpy as np
-from time import sleep
+from audio_processing import read_input_audio
+from spectrum_matrix import generate_visualization
 
 AUDIO_QUEUE = multiprocessing.Queue()
 
@@ -47,4 +43,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

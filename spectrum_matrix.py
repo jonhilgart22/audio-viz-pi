@@ -1,12 +1,14 @@
 # adapted from https://www.hackster.io/gatoninja236/raspberry-pi-audio-spectrum-display-1791fa#things
-import alsaaudio as aa
+import time
 import wave
 from struct import unpack
+from typing import Any, List, Tuple
+
 import numpy as np
-from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
-from typing import List, Any, Tuple
-import time
+
+import alsaaudio as aa
 from constants import NUM_CHANNELS, PERIOD_SIZE, SAMPLE_RATE
+from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
 
 __all__ = ["generate_visualization"]
 
