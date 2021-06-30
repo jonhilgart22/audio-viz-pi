@@ -33,10 +33,10 @@ def main() -> None:
     """The main driver program that reads in an audio stream and sends it to
     a visualization program to display
     """
-    read_thread = Thread(target=audio_input_queue)
+    audio_input_thread = Thread(target=audio_input_queue)
     viz_thread = Thread(target=visualization_output_queue)
 
-    read_thread.start()
+    audio_input_thread.start()
     viz_thread.start()
 
 
