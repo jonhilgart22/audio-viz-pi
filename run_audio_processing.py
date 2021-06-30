@@ -10,14 +10,14 @@ from spectrum_matrix import generate_visualization
 AUDIO_QUEUE = multiprocessing.Queue()
 
 
-def audio_input_queue():
+def audio_input_queue() -> None:
     print("Putting audio input into the queue")
     while True:
         audio_input = read_input_audio()
         AUDIO_QUEUE.put(audio_input)
 
 
-def visualization_output_queue():
+def visualization_output_queue() -> None:
     print("Reading audio input from the queue to visualize")
     while True:
         try:
@@ -27,7 +27,6 @@ def visualization_output_queue():
             generate_visualization(data)
         except queue.Empty:
             print("empty queue")
-            data = None
 
 
 def main():
