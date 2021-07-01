@@ -38,6 +38,10 @@ options.drop_privileges = False
 D_MATRIX = RGBMatrix(options=options)
 
 
+def moving_average(x: List[int], w: int) -> List[int]:
+    return np.int_(np.convolve(x, np.ones(w), "same") / w)
+
+
 def calculate_levels(
     data: Any, previous_power: List[int]
 ) -> Tuple[List[int], List[int]]:
@@ -57,28 +61,29 @@ def calculate_levels(
     fourier = np.fft.rfft(data)
     fourier = np.delete(fourier, len(fourier) - 1)
     power = np.log10(np.abs(fourier)) ** 2
-    if len(power) == N_ROWS:  # this is the size of the matrix
-        min_value = np.min(power)
-        max_value = np.max(power)
-        # https://stats.stackexchange.com/questions/281162/scale-a-number-between-a-range
-        # matrix = np.int_(N_ROWS * (power - min_value) / (max_value - min_value))
-        matrix = power
-    else:
-        try:
-            reshaped_power = np.reshape(power, (N_ROWS, N_COLS))
-        except ValueError as e:
-            print(e, "---error---")
-            reshaped_power = np.reshape(previous_power, (N_ROWS, N_COLS))
-        matrix = np.int_(np.average(reshaped_power, axis=1))
+    try:
+        reshaped_power = np.reshape(power, (N_ROWS, int(PERIOD_SIZE / N_ROWS)))
+    except ValueError as e:
+        print(e, "---error---")
+        reshaped_power = np.reshape(previous_power, (N_ROWS, int(PERIOD_SIZE / N_ROWS)))
+    matrix = np.int_(np.average(reshaped_power, axis=1))
+    min_value = np.min(matrix)
+    max_value = np.max(matrix)
+    # https://stats.stackexchange.com/questions/281162/scale-a-number-between-a-range
+    matrix = np.int_(max_value * (matrix - min_value) / (max_value - min_value))
+    matrix = moving_average(matrix, 4)
 
     return matrix, power
 
 
-def write_to_led_matrix(data: Any) -> None:
+def write_to_led_matrix(data: Any, r_val: int, g_val: int, b_val: int) -> None:
     """"Write to each individual LED of our 64x64 matrix
 
     Args:
         data (): the buffer of input audio data
+        r_val: int the value for red to visualize
+        g_val:int the value for green to visualize
+        b_val:int the value for blue to visualize
 
     Returns:
         [type]: [description]
@@ -100,40 +105,49 @@ def write_to_led_matrix(data: Any) -> None:
     print("Writing to a matrix")
     D_MATRIX.Clear()
     for x in range(0, N_ROWS):  # write to the matrix
-        for y in range(int(matrix[x])):
-            # print(x, y, "x y")
-            if y < 32:
-                # https://github.com/hzeller/rpi-rgb-led-matrix/blob/master/bindings/python/rgbmatrix/core.pyx#L32
-                D_MATRIX.SetPixel(x, y, 255, 50, 50)  # r,g,b
-                D_MATRIX.SetPixel(x, y - 1, 255, 50, 50)
-            elif y < 50:
-                D_MATRIX.SetPixel(x, y, 255, 25, 0)
-                D_MATRIX.SetPixel(x, y - 1, 255, 25, 0)
-            else:
-                D_MATRIX.SetPixel(x, y, 255, 100, 50)
-                D_MATRIX.SetPixel(x, y - 1, 255, 100, 50)
+        for y in range(int(matrix[x]) * 2):
+            # create color gradient
+            aug_r_val = r_val + y
+            aug_g_val = g_val + y
+            aug_b_val = b_val + y
+            if aug_r_val > 255:
+                aug_r_val = r_val
+            if aug_g_val > 255:
+                aug_g_val = r_val
+            if aug_b_val > 255:
+                aug_b_val = r_val
+            D_MATRIX.SetPixel(x, y, aug_r_val, aug_g_val, aug_b_val)  # r,g,b
+            D_MATRIX.SetPixel(x, y - 1, aug_r_val, aug_g_val, aug_b_val)
     print("Finished writing to the led matrix")
 
 
-def generate_visualization(data: Any = None) -> None:
+def generate_visualization(
+    r_val: int, g_val: int, b_val: int, data: Any = None,
+) -> None:
     """
     main input function that read from a .wav file and draws corresponding pixels
     or takes in buffer input from an audio device
     
     :param data: either a buffer stream from audio in or none. If None, reads a .wav file
+
     """
+
     reading_input_file = False
     if data is None:
         reading_input_file = True
         wavfile = read_in_wav_file("moo.wav")
         data = wavfile.readframes(PERIOD_SIZE)
+        # starting color is dark red
+        r_val = 100
+        g_val = 10
+        b_val = 10
 
     if reading_input_file:
         print("reading input file")
         while data != "":
-            write_to_led_matrix(data)
+            write_to_led_matrix(data, r_val, g_val, b_val)
     else:  # used to pass live audio to the visualization program
-        write_to_led_matrix(data)
+        write_to_led_matrix(data, r_val, g_val, b_val)
 
 
 if __name__ == "__main__":

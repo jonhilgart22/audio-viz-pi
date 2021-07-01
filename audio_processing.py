@@ -39,7 +39,7 @@ def read_input_audio(testing: bool = False) -> Optional[alsaaudio.PCM]:
         print(f"Error reading in audio {e}")
         return None
 
-    unpacked_data = np.array(unpack(str(2 * PERIOD_SIZE) + "B", data))[
-        ::2
-    ]  # unpack from pytes
+    unpacked_data = np.array(
+        unpack(str(2 * PERIOD_SIZE) + "B", data)
+    )  # unpack from pytes
     return unpacked_data
