@@ -7,7 +7,8 @@ Audio visualization for raspberry pi
 - Assemble following the adafruit guide [here](https://learn.adafruit.com/adafruit-rgb-matrix-plus-real-time-clock-hat-for-raspberry-pi/assembly). One tricky thing is sodering the white wire from the rainbow cable to the 24 GPIO pin. You can see an image of this below.
 - You'll also need a usb microphone. I used [this one](https://www.amazon.com/gp/product/B08M37224H/ref=ppx_yo_dt_b_search_asin_image?ie=UTF8&psc=1).
 
-![Pi layout](media/pin_24.jpeg)
+
+<img src="media/pin_24.jpeg" alt="pin 24" width="200"/>
 
 ## Results
 

@@ -70,7 +70,10 @@ def calculate_levels(
     min_value = np.min(matrix)
     max_value = np.max(matrix)
     # https://stats.stackexchange.com/questions/281162/scale-a-number-between-a-range
-    matrix = np.int_(max_value * (matrix - min_value) / (max_value - min_value))
+    max_value = max_value * 0.7
+    if max_value > N_ROWS:
+        max_value = N_ROWS
+    matrix = np.int_(max_value * ((matrix - min_value) / (max_value - min_value)))
     matrix = moving_average(matrix, 4)
 
     return matrix, power
