@@ -60,7 +60,11 @@ def calculate_levels(
         return np.zeros(1), 0
     fourier = np.fft.rfft(data)
     fourier = np.delete(fourier, len(fourier) - 1)
-    power = np.log10(np.abs(fourier)) ** 2
+    try:
+        power = np.log10(np.abs(fourier)) ** 2
+    except ValueError as e:
+        print(f"Error = {e}")
+        power = np.zeros(len(fourier))
     try:
         reshaped_power = np.reshape(power, (N_ROWS, int(PERIOD_SIZE / N_ROWS)))
     except ValueError as e:
