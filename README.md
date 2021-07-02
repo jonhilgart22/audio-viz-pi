@@ -15,13 +15,15 @@ Audio visualization for raspberry pi
 1. Audio Processing 
 - You can display the frequency steptrum of audio in near real-time as shown below.
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/wC7Q1LEvRRQ/0.jpg)](https://www.youtube.com/watch?v=wC7Q1LEvRRQ)
+[![first_audio_image](https://img.youtube.com/vi/wC7Q1LEvRRQ/0.jpg)](https://www.youtube.com/watch?v=wC7Q1LEvRRQ)
 
+- In addition, there is an option to have the color bars change gradually over time shown below. 
+[![second_audio_image](https://img.youtube.com/vi/HIWIXwZ4F4o/0.jpg)](https://www.youtube.com/watch?v=HIWIXwZ4F4o)
 
-1. Images
+2. Displaying Images
 - With the 64x64 matrix hooked up to the pi, you can also display images such as this image of a walk in the woods.
 
-![Pi image](media/walk-in-the-woods.jpeg)
+<img src="media/walk-in-the-woods.jpeg" alt="walk_in_woods" width="300"/>
 
 ## Install
 
