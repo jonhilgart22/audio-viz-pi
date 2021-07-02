@@ -43,11 +43,12 @@ def visualization_output_queue(
                 r_val += np.random.randint(rand_int_lower, rand_int_upper)
             elif r_going_down:
                 r_val -= np.random.randint(rand_int_lower, rand_int_upper)
+
             if g_going_up:
                 g_val += np.random.randint(rand_int_lower, rand_int_upper)
-
             elif g_going_down:
                 g_val -= np.random.randint(rand_int_lower, rand_int_upper)
+
             if b_going_up:
                 b_val += np.random.randint(rand_int_lower, rand_int_upper)
             elif b_going_down:
@@ -61,6 +62,7 @@ def visualization_output_queue(
                 r_val = 0
                 r_going_up = True
                 r_going_down = False
+
             if g_val > 255:
                 g_val = 255
                 g_going_down = True
@@ -69,6 +71,7 @@ def visualization_output_queue(
                 g_val = 0
                 g_going_up = True
                 g_going_down = False
+
             if b_val > 255:
                 b_val = 255
                 b_going_down = True
