@@ -8,7 +8,7 @@ Audio visualization for raspberry pi
 - You'll also need a usb microphone. I used [this one](https://www.amazon.com/gp/product/B08M37224H/ref=ppx_yo_dt_b_search_asin_image?ie=UTF8&psc=1).
 
 
-<img src="media/pin_24.jpeg" alt="pin 24" width="200"/>
+<img src="media/pin_24.jpeg" alt="pin 24" width="300"/>
 
 ## Results
 
