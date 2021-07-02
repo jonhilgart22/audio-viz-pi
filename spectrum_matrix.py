@@ -129,7 +129,7 @@ def write_to_led_matrix(data: Any, r_val: int, g_val: int, b_val: int) -> None:
 
 
 def generate_visualization(
-    r_val: int, g_val: int, b_val: int, data: Any = None,
+    r_val: int, g_val: int, b_val: int, data: Any = None
 ) -> None:
     """
     main input function that read from a .wav file and draws corresponding pixels

@@ -2,14 +2,11 @@
 ## This is an example of a simple sound capture script.
 ##
 ## The script opens an ALSA pcm for sound capture. Set
-## various attributes of the capture, and reads in a loop,
-## Then prints the volume.
+## various attributes of the capture, and reads in a period of audio data and returns it.
 ##
 ## To test it out, run it and shout at your microphone:
 # borrowed from https://www.raspberrypi.org/forums/viewtopic.php?t=212857
 
-import audioop
-import time
 from struct import unpack
 from typing import Optional
 
@@ -23,7 +20,7 @@ def read_input_audio(testing: bool = False) -> Optional[alsaaudio.PCM]:
     # Open the device in blocking capture mode.
     # The period size controls the internal number of frames per period.
     # The significance of this parameter is documented in the ALSA api.
-    # For our purposes, it is suficcient to know that reads from the device
+    # For our purposes, it is sufficient to know that reads from the device
     # will return this many frames
     try:
         I, data = alsaaudio.PCM(
@@ -41,5 +38,5 @@ def read_input_audio(testing: bool = False) -> Optional[alsaaudio.PCM]:
 
     unpacked_data = np.array(
         unpack(str(2 * PERIOD_SIZE) + "B", data)
-    )  # unpack from pytes
+    )  # unpack from bytes
     return unpacked_data
