@@ -4,7 +4,7 @@ Real-time audio visualization for raspberry pi
 
 ## Materials
 - Purchase everything from [this guide](https://www.hackster.io/gatoninja236/raspberry-pi-audio-spectrum-display-1791fa#things) except for the `DFRobot ESP32 FireBeetle` chip.
-- Assemble following the adafruit guide [here](https://learn.adafruit.com/adafruit-rgb-matrix-plus-real-time-clock-hat-for-raspberry-pi/assembly). One tricky thing is sodering the white wire from the rainbow cable to the 24 GPIO pin. You can see an image of this below.
+- Assemble following the adafruit guide [here](https://learn.adafruit.com/adafruit-rgb-matrix-plus-real-time-clock-hat-for-raspberry-pi/assembly). One tricky thing is sodering the white wire from the rainbow cable to the 24 GPIO pin. You can see an image of this below. Also of note, we did NOT need to solder the E jumper between the 8 or 16 location. Everything worked fine without this.
 - You'll also need a usb microphone. I used [this one](https://www.amazon.com/gp/product/B08M37224H/ref=ppx_yo_dt_b_search_asin_image?ie=UTF8&psc=1).
 
 
