@@ -30,18 +30,18 @@ Audio visualization for raspberry pi
 - All on your raspberry pi
 
 1. Follow the instructions here <https://github.com/hzeller/rpi-rgb-led-matrix/tree/master/bindings/python>
-2. Install `apt-get libasound2-dev` on your raspberry pi
-3. Install Poetry `bash curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python`
-4. Install poetry dependencies `bash poetry install`
+2. Install `shell apt-get libasound2-dev` on your raspberry pi
+3. Install Poetry `shell curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python`
+4. Install poetry dependencies `shell poetry install`
 
 ## Run
 This should all be run on your raspbrerry pi
 
-1. `bash sudo python3 -m run_audio_processing`
+1. `shell sudo python3 -m run_audio_processing`
 
 - This uses two threads to read in audio data pushed to a queue. Then, we read data from the queue and pass it to the visuzliation program.
 
-2. `bash sudo ./run_audio_processing.sh`
+2. `shell sudo ./run_audio_processing.sh`
 
 - This passes in audio data using a named pip from ffmeg to `spectrum_matrix.py`
 
