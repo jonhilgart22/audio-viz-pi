@@ -63,5 +63,5 @@ sudo python3 -m run_audio_processing
 sudo ./run_audio_processing.sh
 ```
 
-- This passes in audio data using a named pip from ffmeg to ```spectrum_matrix.py```
+- This passes in audio data using a named pipe from ffmeg to ```spectrum_matrix.py```
 
