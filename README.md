@@ -30,6 +30,7 @@ Real-time audio visualization for raspberry pi
 - All on your raspberry pi
 
 1. Follow the instructions here <https://github.com/hzeller/rpi-rgb-led-matrix/tree/master/bindings/python>
+
 2. Install 
 ```shell 
 apt-get libasound2-dev
@@ -52,13 +53,15 @@ poetry install
 This should all be run on your raspbrerry pi
 
 1. Launch this program 
+
 ```shell 
 sudo python3 -m run_audio_processing
 ```
 
 - This uses two threads to read in audio data pushed to a queue. Then, we read data from the queue and pass it to the visuzliation program.
 
-1. Run this
+2. Run this
+
 ```shell
 sudo ./run_audio_processing.sh
 ```
