@@ -38,7 +38,7 @@ def visualization_output_queue(
             # If `False`, the program is not blocked. `Queue.Empty` is thrown if
             # the queue is empty
             generate_visualization(r_val, g_val, b_val, data=data)
-            # create some randomness so that color transitions aren't deterministic
+            # create some randomnes2 so that color transitions aren't deterministic
             if r_going_up:
                 r_val += np.random.randint(rand_int_lower, rand_int_upper)
             elif r_going_down:
