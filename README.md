@@ -60,7 +60,7 @@ sudo python3 -m run_audio_processing
 
 - This uses two threads to read in audio data pushed to a queue. Then, we read data from the queue and pass it to the visuzliation program.
 
-2. Run this
+2. Alternatively, you can use this bash script
 
 ```shell
 sudo ./run_audio_processing.sh
